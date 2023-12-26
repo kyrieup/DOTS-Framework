@@ -18,17 +18,17 @@ public class BattleController : MonoBehaviour
         {
             instance = this;
         }
-
-    }
-
-
-    void Start()
-    {
         object a = GameObject.Find("/nv/Top");
         rangeY.y = GameObject.Find("/Env/Top").transform.position.y;
         rangeY.x = GameObject.Find("/Env/Bottom").transform.position.y;
         rangeX.y = GameObject.Find("/Env/Right").transform.position.x;
         rangeX.x = GameObject.Find("/Env/Left").transform.position.x;
+    }
+
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame

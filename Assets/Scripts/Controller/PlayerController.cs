@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour
 {
@@ -47,8 +49,14 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         this.transform.Translate(speed * Time.deltaTime * new Vector3(h, v, 0));
+        Vector3 res = transform.position;
+        res.x = Mathf.Clamp(res.x, BattleController.instance.rangeX.x, BattleController.instance.rangeX.y);
+        res.y = Mathf.Clamp(res.y, BattleController.instance.rangeY.x, BattleController.instance.rangeY.y);
+        res.z = res.y;
+        this.transform.position = res;
         if (h > 0) transform.localScale = Vector3.one;
         else if (h < 0) transform.localScale = new Vector3(-1, 1, 1);
+
     }
 
 

@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     public GameObject target;
     private Camera main;
     public float smoothCoefficient;
+    private Vector3 screenXY;
 
     private void Awake()
     {
@@ -18,15 +19,16 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //ÆÁÄ»×ø±ê×ª»»
+        screenXY = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector3 res = Vector3.SmoothDamp(main.transform.position, target.transform.position, ref speed, Time.deltaTime * smoothCoefficient);
-        res.x = Mathf.Clamp(res.x,BattleController.instance.rangeX.x + Screen.width / 2 , BattleController.instance.rangeX.y - Screen.width / 2);
-        res.y = Mathf.Clamp(res.y,BattleController.instance.rangeY.x + Screen.height / 2, BattleController.instance.rangeY.y - Screen.height / 2);
+        res.x = Mathf.Clamp(res.x,BattleController.instance.rangeX.x + screenXY.x, BattleController.instance.rangeX.y - screenXY.x);
+        res.y = Mathf.Clamp(res.y,BattleController.instance.rangeY.x + screenXY.y, BattleController.instance.rangeY.y - screenXY.y);
         res.z = -10;
         main.transform.position = res;
     }

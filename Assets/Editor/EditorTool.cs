@@ -21,7 +21,7 @@ public static class EditorTool
         Texture2D firstTex = AssetDatabase.LoadAssetAtPath<Texture2D>(pathList[0]);
         int unitHight = firstTex.height;
         int unitWidth = firstTex.width;
-
+        
         Texture2D outputTex = new Texture2D(unitWidth * pathList.Count, unitHight);
         for (int i = 0; i < pathList.Count; i++)
         {
@@ -30,8 +30,11 @@ public static class EditorTool
             outputTex.SetPixels(i * unitWidth ,0,unitWidth, unitHight, colors);
         }
         byte[] res = outputTex.EncodeToPNG();
-        File.WriteAllBytes(pathList[0].Remove(pathList[0].LastIndexOf(firstTex.name)) + "Merge.png",res);
+        string path = pathList[0].Remove(pathList[0].LastIndexOf(firstTex.name)) + "Merge.png";
+        File.WriteAllBytes(path, res);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+        TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+        textureImporter.textureType = TextureImporterType.Sprite;
     }
 }
